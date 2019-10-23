@@ -11,13 +11,14 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
-Route::get('/cafes', 'CafesController@index');
+// Route::get('/cafes', 'CafesController@index');
 
-Route::get('/cafes/{cafe}', 'CafesController@show');
+// Route::get('/cafes/{cafe}', 'CafesController@show'); 
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

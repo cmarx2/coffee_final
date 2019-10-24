@@ -1,4 +1,4 @@
-import { ROASE_CONFIG } from '../.config.js';
+import { ROAST_CONFIG } from '../config.js';
 
 export default {
 

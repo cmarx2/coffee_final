@@ -54651,6 +54651,40 @@ module.exports = function(module) {
 
 /***/ }),
 
+/***/ "./resources/js/api/cafe.js":
+/*!**********************************!*\
+  !*** ./resources/js/api/cafe.js ***!
+  \**********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _config_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../config.js */ "./resources/js/config.js");
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  // GET   /api/cafes
+  getCafes: function getCafes() {
+    return axios.get(_config_js__WEBPACK_IMPORTED_MODULE_0__["ROAST_CONFIG"].API_URL + '/cafes');
+  },
+  // GET   /api/cafes/{cafeID}
+  getCafe: function getCafe(cafeID) {
+    return axios.get(_config_js__WEBPACK_IMPORTED_MODULE_0__["ROAST_CONFIG"].API_URL + '/cafes/' + cafeID);
+  },
+  // POST  /api/cafes
+  postAddNewCafe: function postAddNewCafe(name, address, city, state, zip) {
+    return axios.post(_config_js__WEBPACK_IMPORTED_MODULE_0__["ROAST_CONFIG"].API.URL + '/cafes', {
+      name: name,
+      address: address,
+      city: city,
+      state: state,
+      zip: zip
+    });
+  }
+});
+
+/***/ }),
+
 /***/ "./resources/js/app.js":
 /*!*****************************!*\
   !*** ./resources/js/app.js ***!
@@ -54811,6 +54845,110 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ExampleComponent_vue_vue_type_template_id_299e239e___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
+
+/***/ }),
+
+/***/ "./resources/js/config.js":
+/*!********************************!*\
+  !*** ./resources/js/config.js ***!
+  \********************************/
+/*! exports provided: ROAST_CONFIG */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ROAST_CONFIG", function() { return ROAST_CONFIG; });
+var api_url = '';
+
+switch ("development") {
+  case 'development':
+    api_url = 'https://roast.dev/api';
+    break;
+
+  case 'production':
+    api_url = 'https://roastandbrew.coffee/api';
+    break;
+}
+
+var ROAST_CONFIG = {
+  API_URL: api_url
+};
+
+/***/ }),
+
+/***/ "./resources/js/modules/cafes.js":
+/*!***************************************!*\
+  !*** ./resources/js/modules/cafes.js ***!
+  \***************************************/
+/*! exports provided: cafes */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "cafes", function() { return cafes; });
+/* harmony import */ var _api_cafe_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../api/cafe.js */ "./resources/js/api/cafe.js");
+//configure the state
+
+var cafes = {
+  state: {
+    cafes: [],
+    cafesLoadStatus: 0,
+    cafe: {},
+    cafeLoadStatus: 0
+  },
+  actions: {
+    loadCafes: function loadCafes(_ref) {
+      var commit = _ref.commit;
+      commit('setCafesLoadStatus', 1);
+      _api_cafe_js__WEBPACK_IMPORTED_MODULE_0__["default"].getCafes().then(function (response) {
+        commit('setCafes', response.data);
+        commit('setCafesLoadStatus', 2);
+      })["catch"](function () {
+        commit('setCafes', []);
+        commit('setCafeLoadStatus', 3);
+      });
+    },
+    loadCafe: function loadCafe(_ref2, data) {
+      var commit = _ref2.commit;
+      commit('setCafeLoadStatus', 1);
+      _api_cafe_js__WEBPACK_IMPORTED_MODULE_0__["default"].getCafe(data.id).then(function (response) {
+        commit('setCafe', response.data);
+        commit('setCafeLoadStatus', 2);
+      })["catch"](function () {
+        commit('setCafe', {});
+        commit('setCafeLoadStatus', 3);
+      });
+    }
+  },
+  mutations: {
+    setCafesLoadStatus: function setCafesLoadStatus(state, status) {
+      state.cafesLoadStatus = status;
+    },
+    setCafes: function setCafes(state, cafes) {
+      state.cafes = cafes;
+    },
+    setCafeLoadStatus: function setCafeLoadStatus(state, status) {
+      state.cafeLoadStatus = status;
+    },
+    setCafe: function setCafe(state, cafe) {
+      state.cafe = cafe;
+    }
+  },
+  getters: {
+    getCafesLoadStatus: function getCafesLoadStatus(state) {
+      return state.cafesLoadStatus;
+    },
+    getCafes: function getCafes(state) {
+      return state.cafes;
+    },
+    getCafeLoadStatus: function getCafeLoadStatus(state) {
+      return state.cafeLoadStatus;
+    },
+    getCafe: function getCafe(state) {
+      return state.cafe;
+    }
+  }
+};
 
 /***/ }),
 
@@ -55141,12 +55279,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var _modules_cafes__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modules/cafes */ "./resources/js/modules/cafes.js");
 
 
 
 vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__["default"]);
+
 /* harmony default export */ __webpack_exports__["default"] = (new vuex__WEBPACK_IMPORTED_MODULE_2__["default"].Store({
-  modules: {}
+  modules: {
+    cafes: _modules_cafes__WEBPACK_IMPORTED_MODULE_3__["cafes"]
+  }
 }));
 
 /***/ }),

@@ -42,19 +42,36 @@ export const cafes = {
 
     mutations: {
         setCafesLoadStatus( state, status ){
-
+            state.cafesLoadStatus = status;
         },
 
         setCafes( state, cafes ){
-
+            state.cafes = cafes;
         },
 
         setCafeLoadStatus( state, status ){
-
+            state.cafeLoadStatus = status;
         },
 
         setCafe( state, cafe ) {
-
+            state.cafe = cafe;
         }
     },
+
+    getters: {
+        getCafesLoadStatus(state){
+            return state.cafesLoadStatus;
+        },
+
+        getCafes(state){
+            return state.cafes;
+        },
+
+        getCafeLoadStatus(state){
+            return state.cafeLoadStatus;
+        },
+        getCafe(state){
+            return state.cafe;
+        }
+    }
 }
